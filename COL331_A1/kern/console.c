@@ -72,6 +72,10 @@ serial_putc(int c)
 	     i++)
 		delay();
 
+	outb(COM1+COM_TX, c);
+    /*outb(0x378+2, 0x08|0x04|0x01);*/
+    /*outb(0x378+2, 0x08);*/
+    /*outb()*/
 	//printf to shell using serial interface. code to follow
 
 }
