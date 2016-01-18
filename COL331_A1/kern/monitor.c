@@ -62,13 +62,23 @@ mon_backtrace(int argc, char **argv, struct Trapframe *tf)
     cprintf ("Stack backtrace:\n");
 	// Your code here.
     uint32_t temp = read_ebp();
+    /*uint32_t eip1= read_eip();*/
+    uint32_t eip1;
+    struct Eipdebuginfo x;
+    __asm__ volatile("movl $.,%0" : "=r" (eip1));
+    /*__asm__volatile("movl $., %0":"=r"(eip1));*/
+    debuginfo_eip(eip1,&x);
+
+    cprintf("  current eip=%08x\n",eip1);
+            cprintf("\t%s:%d: %.*s+%d\n",x.eip_file,x.eip_line,x.eip_fn_namelen,x.eip_fn_name,*(uint32_t*)(temp+4)-x.eip_fn_addr);
     while (temp !=0)
     {
         cprintf("  ebp %08x  eip %08x  args %08x %08x %08x %08x %08x\n", temp, *(uint32_t*)(temp+4), *(uint32_t*)(temp+8), *(uint32_t*)(temp+12), *(uint32_t*)(temp+16), *(uint32_t*)(temp+20), *(uint32_t*)(temp+24));
         uintptr_t eip =*(uint32_t*)(temp+4);
-        struct Eipdebuginfo x;
+        /*struct Eipdebuginfo x;*/
         debuginfo_eip(eip,&x);
-        cprintf("\t%s:%d: %.*s+\n",x.eip_file,x.eip_line,x.eip_fn_namelen,x.eip_fn_name);
+        /*if (*(uint32_t*)temp!=0)*/
+            cprintf("\t%s:%d: %.*s+%d\n",x.eip_file,x.eip_line,x.eip_fn_namelen,x.eip_fn_name,*(uint32_t*)(temp+4)-x.eip_fn_addr);
         temp = *(uint32_t*)temp;
     }
 	return 0;
