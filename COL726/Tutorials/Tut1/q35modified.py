@@ -17,7 +17,7 @@ sum4 = 0.0
 sum5 = 0.0
 for j in range (1,n):
     sum4 = h*j - h*j
-    sum5 = sum5 - h*(n-j+1);
+    sum5 = sum5 - h*(n-j);
 for j in range(1,n):
     sum5 = sum5 + h*j;
 print sum4, sum5, (sum4-sum5)
