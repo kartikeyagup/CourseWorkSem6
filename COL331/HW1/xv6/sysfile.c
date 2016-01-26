@@ -62,7 +62,44 @@ sys_dup(void)
   filedup(f);
   return fd;
 }
+/*int*/
+/*sys_dup2(void)*/
+/*{*/
+    /*struct file *oldfile, *newfile;*/
+    /*int newfd;*/
 
+    /*if (argfd(0, 0, &oldfile) < 0) {*/
+        /*return -1;*/
+    /*}*/
+    /*if (argint(1, &newfd) < 0) {*/
+        /*return -1;*/
+    /*}*/
+
+    /*if (proc->ofile[newfd] == 0) {*/
+        /*// The descriptor isnt in use yet so we can safely duplicate the*/
+        /*// file into a the new one*/
+        /*goto final;*/
+    /*} else if (argfd(1, &newfd, &newfile) < 0) {*/
+        /*return -1;*/
+    /*}*/
+
+    /*if (oldfile == newfile) {*/
+        /*return newfd;*/
+    /*}*/
+    /*// XXX(ajw) The `dup` implementation above doesnt do any locking. Assuming*/
+    /*// thats ok, why can we get away with not locking? Maybe because we dont have*/
+    /*// have threads?*/
+    /*if (newfile->ref > 0) {*/
+        /*fileclose(newfile);*/
+    /*}*/
+
+
+/*final:*/
+    /*proc->ofile[newfd] = oldfile;*/
+    /*filedup(oldfile);*/
+
+    /*return newfd;*/
+/*}*/
 int sys_dup2(void)
 {
     struct file *f1, *f2;
@@ -75,15 +112,15 @@ int sys_dup2(void)
     if (!proc->ofile[fd1])
     {
         argfd(1,&fd1,&f2);
+        fileclose(f2);
 
         if (f1==f2)
             return fd1;
     }
     proc->ofile[fd1]=f1;
     filedup(f1);
-
+    /*fileclose(f2);*/
     return fd1;
-
 }
 
 int

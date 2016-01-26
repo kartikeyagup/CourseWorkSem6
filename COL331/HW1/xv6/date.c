@@ -13,7 +13,7 @@ main(int argc, char *argv[])
     exit();
   }
 
-    printf(1,"%d:%d:%d :: %d-%d-%d\n",r.hour,r.minute,r.second, r.day,r.month,r.year);
+    printf(1,"  Year: %d\n  Month:%d\n  Date: %d\n  Hour: %d\n  Minute: %d\n  Second: %d\n",r.year,r.month,r.day, r.hour,r.minute,r.second);
   // your code to print the time in any format you like...
 
   exit();

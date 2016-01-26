@@ -137,10 +137,10 @@ syscall(void)
   num = proc->tf->eax;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     proc->tf->eax = syscalls[num]();
-    char* functions[23]= {"fork","exit","wait","pipe","read","kill","exec","fstat","chdir",
-                        "dup","getpid","sbrk","sleep","uptime","open","write","mknod",
-                        "unlink","link","mkdir","close","date","dup2"};
-    cprintf("%s -> %d\n",functions[num-1],  proc->tf->eax);
+    /*char* functions[23]= {"fork","exit","wait","pipe","read","kill","exec","fstat","chdir",*/
+                        /*"dup","getpid","sbrk","sleep","uptime","open","write","mknod",*/
+                        /*"unlink","link","mkdir","close","date","dup2"};*/
+    /*cprintf("%s -> %d\n",functions[num-1],  proc->tf->eax);*/
   } else {
     cprintf("%d %s: unknown sys call %d\n",
             proc->pid, proc->name, num);
