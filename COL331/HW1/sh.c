@@ -59,7 +59,8 @@ runcmd(struct cmd *cmd)
   case ' ':
     ecmd = (struct execcmd*)cmd;
     if(ecmd->argv[0] == 0)
-      exit(0);
+        exit(0);
+    /*fprintf(stderr,"function to be called %s\n",ecmd->argv[0]);*/
     execvp(ecmd->argv[0], ecmd->argv);
     // TODO: Check /bin folder
     // TODO: Enviornment variables
@@ -68,18 +69,69 @@ runcmd(struct cmd *cmd)
   case '>':
   case '<':
     rcmd = (struct redircmd*)cmd;
-    // Your code here ...
-    int f = open()
-    if (rcmd->type)
-    {
-         
-    }
+    /*rcmd->fd = open(rcmd->file,rcmd->mode);*/
+    /*if (rcmd->type==0)*/
+    /*{*/
+        /*// < input*/
+        /*rcmd->fd = open(rcmd->file,rcmd->mode);*/
+        /*dup2(rcmd->fd,0);*/
+    /*}*/
+    /*else*/
+    /*{*/
+        /*rcmd->fd = open(rcmd->file,rcmd->mode,0666);*/
+        /*fprintf(stdout,"output case\n");*/
+        /*[>dup2(rcmd->fd,1);<]*/
+        /*fprintf(stdout,"Lets see where this goes\n");*/
+        /*// > output*/
+        /*close(rcmd->fd);*/
+        /*rcmd->fd = open(rcmd->file,rcmd->mode,0666);*/
+        /*runcmd(rcmd->cmd);*/
+    /*}*/
+    close(rcmd->fd);
+    open(rcmd->file,rcmd->mode,0666);
     runcmd(rcmd->cmd);
+    /*fprintf(stderr, "closing now\n");*/
+    /*close(rcmd->fd);*/
+    /*runcmd(rcmd->cmd);*/
+    /*int old_std= dup(1);*/
+	/*int file = open("test1.txt",O_RDWR);*/
+	/*std::cout << "Before dup2 line\n";*/
+	/*dup2(file,1);*/
+	/*std::cout << "Just after dup2\n";*/
+	//fflush(stdout);
+	/*close(file);*/
+	/*dup2(1,1);*/
+	//fflush(stdout);
+	/*dup2(old_std,1);*/
+	/*close(old_std);*/
+	/*std::cout <<  "After closing\n";*/
+	/*return 0;*/
     break;
+    // Your code here ...
 
   case '|':
     pcmd = (struct pipecmd*)cmd;
-    fprintf(stderr, "pipe not implemented\n");
+    /*fprintf(stderr, "pipe not implemented\n");*/
+    int fids[2];
+    pipe(fids);
+    int x = fork();
+    if (x==0)
+    {
+         close(1);
+         close(fids[0]);
+         dup2(fids[1],1);
+        runcmd(pcmd->left);
+    }
+    else
+    {
+        close(0);
+        close(fids[1]);
+        dup2(fids[0],0);
+        runcmd(pcmd->right);
+    }
+    close(fids[0]);
+    close(fids[1]);
+    waitpid();
     // Your code here ...
     break;
   }
