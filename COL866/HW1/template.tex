@@ -33,7 +33,7 @@
 %-------------------------------- Title ----------------------------------
 
 \title{COL866 \exerciseset}
-\author{\studentname \qquad SUNet ID: \suid}
+\author{\studentname \qquad \newline: \suid}
 
 %--------------------------------- Text ----------------------------------
 
@@ -41,30 +41,158 @@
 \maketitle
 
 \section*{Problem 4}
+Discussed with Kabir Chhabra.
 \begin{enumerate}
 \item %A
-Your answer here.
-
+		Not to be handed in
 \item %B
-Next one here.
+If V is fixed upfront, then this allocation is monotonic. \\
+On increasing the bid, the scaled and normalised valuation will increase or remain the same. Let us consider both cases. \\
+\begin{itemize}
+	\item Case 1: The new normalised valuation remains the same. \\
+			In case this remains the same, then his allocation will not change.
+	\item Case 2: The new normalised valuation increases. \\
+			As the valuation of this bidder has increased and that of the others is the same, keeping the same allocation the utility has increased.
+			We will now prove that on increasing the valuation, we will not remove this bidder. \\
+			Proof by contradiction: \\
+				In case we remove the bidder with increased valuation, then the new maximum valuation which we get will be less than or equal to the max valuation with this bidder as 
+				then we would not take the bidder in the first place which contradicts our assumption.
+\end{itemize}
+Hence proved that the allocation is monotonic if V is fixed up front.
 
 \item %C
-42
+		We will show this by a counter example in which on increasing the value of the maximum, the allocation it gets reduces.
+		\\ Consider the following set of items with their counts,weights and original valuations : \\
+		Set epsilon to be 0.169. And now the highest bidder ie. A increases the valuation to 101. \\
+\begin{table}[!htb]
+\centering
+\caption{Data}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+Items & Number & Size & Valuations & Scaled Valuations & New Valuations \\ \hline
+A     & 2      & 4.4  & 100        & 60                & 60             \\ \hline
+B     & 4      & 1.9  & 50         & 30                & 30             \\ \hline
+C     & 4      & 1.8  & 49.5       & 30                & 29             \\ \hline
+\end{tabular}
+\end{table}
+\\ With the original scaled valuations, the items in the knapsack are 1 item of A and 2 items of C thereby giving a cumulative utility of 120. \\
+After increasing the valuation of item A to 101, the new valuations have been computed and shown in the table. With these new valuations, the allocation will be 4 items of B leading to a utility of 120.
+\\ In this we can see that bidders A have increased their bid but their allocation has reduced hence this allocation is not monotonic. \\
+\item %D
+	Not attempting.
+	
+\item %E
+	No, this allocation is not monotonic. \\
+	Consider the following case with 2 knapsacks of capacity 20 and 18 respectively:
+	\begin{table}[!htb]
+\centering
+\caption{Initial data}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Item Number & Size & Valuation & Valuation/Size \\ \hline
+1           & 20   & 2000      & 100            \\ \hline
+2           & 18   & 1890      & 105            \\ \hline
+3           & 17.5 & 1785      & 102            \\ \hline
+4           & 0.8  & 120       & 150            \\ \hline
+\end{tabular}
+\end{table}
+\\ In the above table, from the algorithm it can be seen that 2 and 4 will be given in knapsack 1 and item 3 in knapsack 2. The total values of the knapsacks are 2110 and 1785 respectively.
+\begin{table}[!htb]
+\centering
+\caption{Data with modified valuation of item 3}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Item Number & Size & Valuation & Valuation/Size \\ \hline
+1           & 20   & 2000      & 100            \\ \hline
+2           & 18   & 1890      & 105            \\ \hline
+3           & 17.5 & 1855      & 106            \\ \hline
+4           & 0.8  & 120       & 150            \\ \hline
+\end{tabular}
+\end{table}
+
+In the above table, we have increased the valuation of item 3 from 1785 to 1855. Now when we allocate the items, by the greedy mechanism, 3 and 4 have to be allocated to Bag 1 but that leads
+to a utility of 1975 which is less than that of good 1, hence 1 will be put in bag 1. Now for bag 2, Item 4 has the maximum valuation/size and nothing can be added after that but Adding time 2 alone
+gives more utility hence we will keep 2 only in knapsack 2. Hence the final allocation is 1 in Bag 1 and 2 in Bag 2.
+\\
+In the above example it can be clearly seen that monotonicity is broken.
+
+	%Let us label the bags as Bag 1 and Bag 2. \\
+	%Consider the following cases: \\
+	%\begin{enumerate}
+		%\item Case 1: The object was originally allocated in Bag 1.\\
+				%In this case, increasing its bid will increase its density but as it was getting allocated earlier, it will again be allocated to bag 1.
+		%\item Case 2: The object was originally allocated in Bag 2. \\
+				%In this case, by increasings its bid its density will increase. In case in the new ordering, it is able to enter bag 1, then it will get the same allocation than before.
+				%If it is not able to enter bag 1 because of bag 1 overflowing, it will get an allocation of its previous size in bag 2 even though it is ranked better as the bag 2 had enough capacity to contain it earlier.
+				%\\ Hence its allocation remains the same.
+		%\item Case 3: The object was not allocated anything. \\
+				%In this case, by increasing its density, it can only get allocated or continue to receive nothing hence its allocation will only improve or remain the same\\
+	%\end{enumerate}
+	%In all the above 3 cases we have proved that its allocation only improves or remains the same hence this allocation is monotonic.
+	
+
+\item %F
+	To prove that this is DSIC, we need to show that there is an incentive to report the truth.
+	\begin{enumerate}
+		\item Reporting the true size is better for the bidders \\
+				Lets us consider the 2 cases where the bidders report a size less or greater than their true size.
+				\begin{itemize}
+					\item Size reported is lesser than true \\
+						In case the bidder gets an allocation his payoff will still be negative as the size allocated to him is less than his requirement.
+					\item Size reported is more than true \\
+						By reporting a higher size, the bid density (bid/size) of the bidder reduces. Which means that if he now gets an allocation, he will definitely get one with the lesser size.
+						This also means that by quoting a higher size, keeping the bid constant, he will receive an allocation less than or equal to the previous case.
+				\end{itemize}
+				Hence proved that keeping the bid constant, quoting the correct size will maximise the payoff.
+		\item Reporting the true valuation is better for the bidders \\
+				We already know that knapsack problem with 2 approximation algorithm is monotonic. Hence by Myerson's lemma, a monotonic allocation is DSIC and hence it has an incentive for being truthful.
+	\end{enumerate}
+	Hence, we have showed that reporting the size and valuation is truth incentive. \\
+	Hence this auction is DSIC.
 
 \end{enumerate}
 
 \section*{Problem 5}
 \begin{enumerate}
-\item %A
+\item %a
+	To prove that this problem is NP hard, we need to show that we can solve Maximum-weight independent set problem using an instance of the social surplus maximisation problem.
+	\newline
+	Consider the following mapping: \newline
+	For every vertex V in MWIS problem, let its set of neighbours be N. The maximum cardinality of the set N will be d. \newline
+	We now map every vertex to a bidder and the set its edges to be the set of items it wants. The valuation of this is set to weight of the vertex in the MWIS problem. \newline
+	In the above construction, it can be observed that the maximum cardinality of the set will be d as each vertex has at max d neighbours. \newline
+	
+	Proof: \newline
+	In the MWIS problem, if we choose a particular vertex, we cannot choose any of its neighbours. This is equivalent to choosing all edges corresponding to an edge. 
+	In the corresponding construction of the social surplus problem, we select the set of vertices which are maximising the weight of the independent set selected.
+	\newline
 
-\item %B
-
-\item %C
-
-\item %D
-
-\item %E
-
+\item %b
+	Yes this algorithm defines a monotone allocation rule. \newline
+	For an allocation rule to be monotonic, we need to prove that given the bids of all other bidders, bidding a higher value than the original bid can only increase the allocation. \newline
+	In this allocation, as the bids are sorted in decreasing order, if we increase the bid of a particular bidder, then either its position in this sorted sequence will remain the same
+	or it will improve. 
+	Now lets consider the following 2 cases\newline
+	\begin{itemize}
+		\item Case 1: Position remains the same \newline
+				In case the position remains the same, the allocation remains the same as earlier.
+		\item Case 2: Position improves \newline
+				In case the bidder was getting an allocation earlier, he will continue to receive the same one. In case he wasn't receiving one earlier, he might get an allocation now or
+				might still not get any. In both these cases his allocation can only increase.
+	\end{itemize}
+	As in both cases we have proved that the allocation can only increase, we have proved that the allocation rule is monotonic.
+\item %c
+	To prove: the allocation given by the greedy mechanism is at least 1/d times as good as maximum possible.
+	Consider the graph made as follows: \newline
+	Each bidder is a vertex. Connect 2 vertices with an edge if there is any item common in their subsets. \newline
+	Now each vertex will be a connected to at max n-1 other vertices as all of them can want the same object but will be a part of at max d cliques. \newline
+	From the algorithm, if we select a vertex, all of its neighbours will have to be removed. \newline
+	Hence on removing a vertex, at max we remove d cliques from the graph. The maximum value of the vertices in the cliques is less than or equal to the value of the selected vertex. \newline
+	Hence at every step of the algorithm, we perform a step which is at least 1/d times of what would happen in case this vertex was not taken but its neighbours were. 
+	\\ The overall social surplus is at least 1/d times that of the maximum possible.
 \end{enumerate}
 
 
