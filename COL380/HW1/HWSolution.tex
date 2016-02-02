@@ -13,6 +13,36 @@
 % That's about enough definitions
 
 \usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+ 
+\usepackage{listings}
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
 %\usepackage{upgreek}
 
 \begin{document}
@@ -23,19 +53,86 @@
 \begin{enumerate}
 \item %Problem 1:
 	\begin{itemize}
-		\item 
-		\item 
+		\item In an un-pipelined processor, 1000 operations are processed and for each line, a total time of $2ns + 1ns + 1ns + 1ns + 1ns + 1ns + 2ns$ is required. \\
+				$\implies$ Total time needed = $1000 * 9ns$ \\
+				$\implies$ t = $9000ns$
+		\item In the given timings, the first and last stages take $2ns$ the amount of time while the other states take $1ns$ time. Because of this the time spent per instruction is $2ns$.\\
+			The number of stages in the pipeline are $7$. \\
+			As there are 2 pipelined procesoors, the number of lines executed by each will be half of earlier $ =500$. \\
+			$\implies$ Time taken for processing 500 lines by a processor = $500*2ns$ = $ 1000ns$. \\
+			But we have not taken into account the time which the last instruction will spend before leaving the pipeline. This is going to be $1ns+1ns+1ns+1ns+1ns+2ns$ = $7ns$. \\
+			\vspace{0.1in}
+			$\implies$ Total time taken = $1000ns+7ns = 1007ns$.
+			\\
+			Diagram showing timeline: \\
+			TODO: Insert table
 	\end{itemize}
 \item %Problem 2:
 	\begin{itemize}
-			\item
-			\item
-	\end{itemize}
+			\item For the peak operation, the entire y will be present in the cache and blocks of x will keep entering and getting evicted by the cache. The present z which is being needed will also be a member of the cache.\\
+				Lets now consider the memory access times as follows\\
+				\begin{enumerate}
+					\item Time needed to get the entire y in cache from DRAM: \\
+							$K$ amount of cache lines to be retreived = $K*100ns$ time. 
+					\item Time needed to get the entire z in cache once from DRAM: \\
+							$K$ amount of cache lines to be retreived = $K*100ns$ time. 
+					\item Time needed to get the entire x in cache repeatedly from DRAM: \\
+							$16K^2/4$ number of cache lines to be retreived = $4K^2*100ns$ \\
+					\item Time needed for retreiving data from the caches for the arithmetic operations: \\
+							$16K^2$ opearations taking place and for each of these 3 elements have to be accessed from the cache = $ 48K^2$ns\\
+					\item Time needed for processing:\\
+							$2*16K^2$ operations require a time of = $32K^2 ns$. 
+				\end{enumerate}
+				$\implies$ Total time for this = $480K^2 + 200K ns$ \\
+				Total number of instructions taking place = $32*K^2$.\\
+				$\implies$ Number of operations per second = \[ 
+						\frac{32 K^2 *10^9}{480K^2 + 200K} \\
+				\]
+				Approximating K to 1000, $\implies$  \[
+						\frac{32 * 10^6 *10^3}{480* 10^6 + 200*10^3} Mflops \\
+				\]
+				$\implies$ \[
+						66.68 Mflops
+					\]
+
+		\item Consider the following code for multiplying the matrices \\
+				\lstinputlisting[language=C]{MatMul.c}
+				For multiplying 2 dense matrices in given, we have to perform $(4K)^3$ mathematical operations \\
+				When the matrices are stored in row major form, for matrix $A$, we need to keep a given row $i$ of the matrix $A$ in the cache along with the memory in $C$ where the result is to be stored.
+				The elements of matrix $B$ are to be fetched column wise but if we wish to access a particular element, we will get 3 other elements which are of no use at that time.
+				Hence for a given $i$ and $j$, the entire column from matrix $C$ needs to be accessed from the DRAM. \\
+				Let us calculate the memory access times as follows: \\
+				\begin{enumerate}
+					\item Time spent in getting Matrix $A$ in the cache from DRAM: \\
+							$4K^2$ number of cache lines to be retrieved = $4K^2 * 100ns$ time.
+					\item Time spent in getting Matrix $C$ in the cache from DRAM: \\
+							$4K^2$ number of cache lines to be retrieved = $4K^2 * 100ns$ time.
+					\item Time spent in getting Matrix $B$ in the cache from DRAM: \\
+							$(4K)^3$ number of cache lines to be retrieved = $64K^3 * 100ns$ time.
+					\item Time needed for retreiving data from caches for arithmetic operations: \\
+							$3*(4K)^3$ values need to be accessed from the cache = $192K^3$ ns time. \\
+					\item Time needed for the arithmetic operations to take place: \\
+							$2*(4K)^3$ number of arithmetic operations take place = $128K^3$ ns time.
+				\end{enumerate}
+				$\implies$ Total time for this = $6720K^3 + 800K^2$ ns. \\
+				Total number of instructions taking place = $128K^3$ \\
+				$\implies$ Number of operations per second= \\
+				\[
+					\frac{128*K^3 * 10^9}{6720*K^3 + 800*K^2} Flops
+				\]
+				Approximating K to 1000 $\implies$
+				\[
+						\frac{128*10^9*10^3}{6720*10^9 + 800*10^6} MFlops
+				\]
+				$\implies$  \[
+					19.045 Mflops
+				\]
+\end{itemize}
 \item %Problem 3:
 	\begin{itemize}
 			\item The value assigned to \textit{y} is 1. This is because when the instruction is executed on $T_0$, the value of y is set to 1 and cache 2, snoops the change.
 			\item In the case when directory based cache coherence, the value is again 1. As x is in the shared section, when it gets updated by $T_0$ the changes are reflected.
-			\item 
+			\item There is no problem based on cache protocols and coherence in this situation. The problem here is because of a race condition.
 	\end{itemize}
 \item %Problem 4:
 	\begin{itemize}
@@ -44,160 +141,160 @@
 		\item
 	\end{itemize}
 
-\item % Problem 1: 
+%\item % Problem 1: 
 
-Prove that:
-% starts math environment, multiline
-\[
-1^2 + 2^2 + \cdots + n^2 = \frac{n(n+1)(2n+1)}{6}
-\]
+%Prove that:
+%% starts math environment, multiline
+%\[
+%1^2 + 2^2 + \cdots + n^2 = \frac{n(n+1)(2n+1)}{6}
+%\]
 
-Using Proof by Induction.
+%Using Proof by Induction.
 
-First, prove that for some n, this equation holds true.
+%First, prove that for some n, this equation holds true.
 
-% starts math environment with alignment on a particular pivot.  The pivot is
-% denoted by '&' on each line
-\begin{align*}
-n = 2
-1^2 + 2^2 & = \frac{2(2+1)(4+1)}{6} \\
-2 + 4 & = \frac{2(3)(5)}{6} \\
-6 &= \frac{30}{6} \\
-6 &= 6
-\end{align*}
+%% starts math environment with alignment on a particular pivot.  The pivot is
+%% denoted by '&' on each line
+%\begin{align*}
+%n = 2
+%1^2 + 2^2 & = \frac{2(2+1)(4+1)}{6} \\
+%2 + 4 & = \frac{2(3)(5)}{6} \\
+%6 &= \frac{30}{6} \\
+%6 &= 6
+%\end{align*}
 
-Now, prove that this works for any n+1.
+%Now, prove that this works for any n+1.
 
-\begin{align*}
-1^2 + 2^2 + \cdots + n^2 & = \frac{n(n+1)(2n+1)}{6} \\
-1^2 + 2^2 + \cdots + n^2 + (n+1)^ 2 & = \frac{(n+1)(n+2)(2n+3)}{6} \\
-\intertext{Notice that the n+1 equation contains the n equation.}
-\boxed{1^2 + 2^2 + \cdots + n^2 } + (n+1)^ 2 & = \frac{(n+1)(n+2)(2n+3)}{6} \\
-\frac{n(n+1)(2n+1)}{6} + (n+1)^2 & = \frac{(n+1)(n+2)(2n+3)}{6} \\
-n(n+1)(2n+1) + 6(n+1)^2 & = (n+1)(n+2)(2n+3) \\
-n(2n+1) + 6(n+1) & = (n+2)(2n+3) \\
-2n^2 + n + 6n + 6 & = 2n^2 + 4n + 3n + 6 \\
-2n^2 + 7n + 6 &= 2n^2 + 7n + 6 \\
-\intertext{therefore}
-1^2 + 2^2 + \cdots + n^2 & = \frac{n(n+1)(2n+1)}{6}
-\end{align*}
+%\begin{align*}
+%1^2 + 2^2 + \cdots + n^2 & = \frac{n(n+1)(2n+1)}{6} \\
+%1^2 + 2^2 + \cdots + n^2 + (n+1)^ 2 & = \frac{(n+1)(n+2)(2n+3)}{6} \\
+%\intertext{Notice that the n+1 equation contains the n equation.}
+%\boxed{1^2 + 2^2 + \cdots + n^2 } + (n+1)^ 2 & = \frac{(n+1)(n+2)(2n+3)}{6} \\
+%\frac{n(n+1)(2n+1)}{6} + (n+1)^2 & = \frac{(n+1)(n+2)(2n+3)}{6} \\
+%n(n+1)(2n+1) + 6(n+1)^2 & = (n+1)(n+2)(2n+3) \\
+%n(2n+1) + 6(n+1) & = (n+2)(2n+3) \\
+%2n^2 + n + 6n + 6 & = 2n^2 + 4n + 3n + 6 \\
+%2n^2 + 7n + 6 &= 2n^2 + 7n + 6 \\
+%\intertext{therefore}
+%1^2 + 2^2 + \cdots + n^2 & = \frac{n(n+1)(2n+1)}{6}
+%\end{align*}
 
-\item % Problem 2
-Prove that
+%\item % Problem 2
+%Prove that
 
-\[
-6 \mid n^3 - n
-\]
+%\[
+%6 \mid n^3 - n
+%\]
 
-Using Proof by Induction.
+%Using Proof by Induction.
 
-First prove that this equation is valid for an arbitrary n.
+%First prove that this equation is valid for an arbitrary n.
 
-\begin{align*}
-n & = 2 \\
-6 & \mid 2^3 - 2 \\
-6 & \mid 6
-\end{align*}
+%\begin{align*}
+%n & = 2 \\
+%6 & \mid 2^3 - 2 \\
+%6 & \mid 6
+%\end{align*}
 
-Now, prove for any n+1
+%Now, prove for any n+1
 
-\begin{align*}
-6 & \mid (n+1)^3 - (n+1) \\
-6 & \mid n^3 + 3n^2 + 3n + 1 - n - 1 \\
-6 & \mid n^3 + 3n^2 + 3n - n \\
-\intertext{I can pull the original equation out of this one}
-6 & \mid \boxed{n^3 - n} + 3n^2 + 3n \\
-\intertext{Now I need to prove that $3n^2 + 3n$ is divisible by 6}
-6 & \mid 3n^2 + 3n \\
-6 & \mid 3(n^2 + n) \\
-2 & \mid n^2 + n \\ 
-\end{align*}
-% this line contains a snippet of math.  Rather than owning its own line, this 
-% math equation is integrated in into the surrounding text.
-Now I need to prove that $n^2 + n$ is divisible by 2, or even 
+%\begin{align*}
+%6 & \mid (n+1)^3 - (n+1) \\
+%6 & \mid n^3 + 3n^2 + 3n + 1 - n - 1 \\
+%6 & \mid n^3 + 3n^2 + 3n - n \\
+%\intertext{I can pull the original equation out of this one}
+%6 & \mid \boxed{n^3 - n} + 3n^2 + 3n \\
+%\intertext{Now I need to prove that $3n^2 + 3n$ is divisible by 6}
+%6 & \mid 3n^2 + 3n \\
+%6 & \mid 3(n^2 + n) \\
+%2 & \mid n^2 + n \\ 
+%\end{align*}
+%% this line contains a snippet of math.  Rather than owning its own line, this 
+%% math equation is integrated in into the surrounding text.
+%Now I need to prove that $n^2 + n$ is divisible by 2, or even 
 
-Let n be even. By our proof in class today (seen in one form in problem 3),
-$n^2$ is even when $n$ is even.  An even number added to an even number is even.
+%Let n be even. By our proof in class today (seen in one form in problem 3),
+%$n^2$ is even when $n$ is even.  An even number added to an even number is even.
 
-Let n be odd. By the same proof, $n^2$ is odd when $n$ is odd. An odd number
-added to an odd number is an even number. Therefore, $n^2 + n$ is an even
-number. 
+%Let n be odd. By the same proof, $n^2$ is odd when $n$ is odd. An odd number
+%added to an odd number is an even number. Therefore, $n^2 + n$ is an even
+%number. 
 
-Therefore, $6 \mid (n+1)^3 - (n+1)$.
+%Therefore, $6 \mid (n+1)^3 - (n+1)$.
 
-\item % Problem 3
-Prove that $\sqrt[3]{2}$ is an irrational number
+%\item % Problem 3
+%Prove that $\sqrt[3]{2}$ is an irrational number
 
-Assume that $\sqrt[3]{2}$ is a rational number.  If so, then
-\begin{align*}
-\sqrt[3]{2} = \frac{a}{b} & != 0 \\
-\intertext{\em{where a,b have no common factors}}
-% this command embeds normal text in a math context.  Very useful.
-a^3 & = b\sqrt[3]{2} \\
-a^3 & = 2b^3 
-\intertext{We now know that $a^3$ is even. It would be helpful is a was even.}
-\intertext{Let $a^3$ be even, prove that a is even}
-a^3 & = 2k \\
-a & = \sqrt[3]{2k} \\
-a & = \sqrt[3]{2} \sqrt[3]{k} \\
-\intertext{Blech...lets try again with the contrapositive.}
-% and here I'm embedding normal text with a math snippet in it.
-\intertext{Assume that a is odd, prove $a^3$ is odd.}
-a & = 2k + 1 \\
-a^3 & = 8k^3 + 12k^2 + 6k + 1 \\
-a^3 & = 2(4k^3 + 6k^2 + 3k) + 1 \\
-\intertext{$a^3$ is odd, therefore if $a^3$ is even, a is even.  Now back.}
-a^3 & = 2b^3 \\
-(2L)^3 & = 2b^3 \\
-8L^3 & = 2b^3 \\
-4L^3 & = b^3 \\
-2(2L^3) & = b^3 \\
-\intertext{By the same proof as above, $b$ must be even because $b^3$ is even.
-Now, a and b share the common factor of two, therefore, $\sqrt[3]{2}$ is not
-rational, and therefore irrational.}
-\end{align*}
-\item % Problem 4
-Given G(V,E), we know that $\sum_{1}^{n} \mid d_i = 2e$. Prove
-\[
-e \leq \frac{n(n-1)}{2}
-\]
+%Assume that $\sqrt[3]{2}$ is a rational number.  If so, then
+%\begin{align*}
+%\sqrt[3]{2} = \frac{a}{b} & != 0 \\
+%\intertext{\em{where a,b have no common factors}}
+%% this command embeds normal text in a math context.  Very useful.
+%a^3 & = b\sqrt[3]{2} \\
+%a^3 & = 2b^3 
+%\intertext{We now know that $a^3$ is even. It would be helpful is a was even.}
+%\intertext{Let $a^3$ be even, prove that a is even}
+%a^3 & = 2k \\
+%a & = \sqrt[3]{2k} \\
+%a & = \sqrt[3]{2} \sqrt[3]{k} \\
+%\intertext{Blech...lets try again with the contrapositive.}
+%% and here I'm embedding normal text with a math snippet in it.
+%\intertext{Assume that a is odd, prove $a^3$ is odd.}
+%a & = 2k + 1 \\
+%a^3 & = 8k^3 + 12k^2 + 6k + 1 \\
+%a^3 & = 2(4k^3 + 6k^2 + 3k) + 1 \\
+%\intertext{$a^3$ is odd, therefore if $a^3$ is even, a is even.  Now back.}
+%a^3 & = 2b^3 \\
+%(2L)^3 & = 2b^3 \\
+%8L^3 & = 2b^3 \\
+%4L^3 & = b^3 \\
+%2(2L^3) & = b^3 \\
+%\intertext{By the same proof as above, $b$ must be even because $b^3$ is even.
+%Now, a and b share the common factor of two, therefore, $\sqrt[3]{2}$ is not
+%rational, and therefore irrational.}
+%\end{align*}
+%\item % Problem 4
+%Given G(V,E), we know that $\sum_{1}^{n} \mid d_i = 2e$. Prove
+%\[
+%e \leq \frac{n(n-1)}{2}
+%\]
 
-\begin{align*}
-\intertext{Base case $n=2$, a graph with two vertices has 1 edge.}
-e & = 1 \\
-e & \leq \frac{2(2-1)}{2} \\
-1 & \leq 1 \\
-\intertext{Now prove the $n+1$ option. When the $n+1$ vertice is added, it can
-add up to $n$ edges, one for each of the existing vertices.}
-e + n & \leq \frac{(n+1)n}{2} \\
-e + n & \leq \frac{n^2 + n}{2} \\
-e + n & \leq \frac{n^2 + n + n - n}{2} \\
-e + n & \leq \frac{n^2 - n}{2} + \frac{2n}{2} \\
-e + n & \leq \boxed{\frac{n(n-1)}{2}} + n \\
-\intertext{Therefore, by induction:}
-e & \leq \frac{n(n-1)}{2}
-\end{align*}
+%\begin{align*}
+%\intertext{Base case $n=2$, a graph with two vertices has 1 edge.}
+%e & = 1 \\
+%e & \leq \frac{2(2-1)}{2} \\
+%1 & \leq 1 \\
+%\intertext{Now prove the $n+1$ option. When the $n+1$ vertice is added, it can
+%add up to $n$ edges, one for each of the existing vertices.}
+%e + n & \leq \frac{(n+1)n}{2} \\
+%e + n & \leq \frac{n^2 + n}{2} \\
+%e + n & \leq \frac{n^2 + n + n - n}{2} \\
+%e + n & \leq \frac{n^2 - n}{2} + \frac{2n}{2} \\
+%e + n & \leq \boxed{\frac{n(n-1)}{2}} + n \\
+%\intertext{Therefore, by induction:}
+%e & \leq \frac{n(n-1)}{2}
+%\end{align*}
 
-\item % Problem 5
+%\item % Problem 5
 
-Show that every graph with two or more nodes contains two nodes that have equal
-degrees.
+%Show that every graph with two or more nodes contains two nodes that have equal
+%degrees.
 
-Let us try to prove that every graph with two or more nodes have unique
-degrees.  We know that the set of possible degrees for a graph with $n$ vertices
-is:
+%Let us try to prove that every graph with two or more nodes have unique
+%degrees.  We know that the set of possible degrees for a graph with $n$ vertices
+%is:
 
-\[
-0,1,\ldots,n-1
-\]
+%\[
+%0,1,\ldots,n-1
+%\]
 
-This gives us a total of $n$ unique degrees to assign to our $n$ vertices. We
-must assign a degree of zero to one vertex. A vertex with degree zero is
-connected to no other vertices.  Let us now assign the degree $n-1$ to a
-vertice.  This vertice is connected to every other vertice in the graph.
-This is a contradiction, because it is impossible to simulatenously have a
-vertice that is connected to every other vertice, and a vertice that is
-connected to none.  Therefore, there are at least two vertices with the same
-degree in any graph with at least 2 vertices.
+%This gives us a total of $n$ unique degrees to assign to our $n$ vertices. We
+%must assign a degree of zero to one vertex. A vertex with degree zero is
+%connected to no other vertices.  Let us now assign the degree $n-1$ to a
+%vertice.  This vertice is connected to every other vertice in the graph.
+%This is a contradiction, because it is impossible to simulatenously have a
+%vertice that is connected to every other vertice, and a vertice that is
+%connected to none.  Therefore, there are at least two vertices with the same
+%degree in any graph with at least 2 vertices.
 \end{enumerate}
 \end{document}
