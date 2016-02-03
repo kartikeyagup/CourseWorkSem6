@@ -17,12 +17,14 @@
  
 \usepackage{listings}
 \usepackage{color}
- 
+ \usepackage{multirow}
+ \usepackage[table,xcdraw]{xcolor}
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
- 
+
+
 \lstdefinestyle{mystyle}{
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
@@ -58,14 +60,30 @@
 				$\implies$ t = $9000ns$
 		\item In the given timings, the first and last stages take $2ns$ the amount of time while the other states take $1ns$ time. Because of this the time spent per instruction is $2ns$.\\
 			The number of stages in the pipeline are $7$. \\
-			As there are 2 pipelined procesoors, the number of lines executed by each will be half of earlier $ =500$. \\
+			As there are 2 pipelined processors, the number of lines executed by each will be half of earlier $ =500$. \\
 			$\implies$ Time taken for processing 500 lines by a processor = $500*2ns$ = $ 1000ns$. \\
 			But we have not taken into account the time which the last instruction will spend before leaving the pipeline. This is going to be $1ns+1ns+1ns+1ns+1ns+2ns$ = $7ns$. \\
 			\vspace{0.1in}
 			$\implies$ Total time taken = $1000ns+7ns = 1007ns$.
 			\\
-			Diagram showing timeline: \\
-			TODO: Insert table
+			\textbf{Timeline Diagram} \\
+			The value in a cell represents the operation number which is being executed. A value of $-$ represents that the particular block will idle.
+\begin{table}[!htb]
+\centering
+\caption{Timeline Diagram}
+\label{my-label}
+\begin{tabular}{|c|c|l|c|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|l|}{Stages\Clock Cycles} & \multicolumn{1}{l|}{0-1}                     & 1-2                    & \multicolumn{1}{l|}{2-3}                   & \multicolumn{1}{l|}{3-4}  & \multicolumn{1}{l|}{4-5}   & \multicolumn{1}{l|}{5-6}   & \multicolumn{1}{l|}{6-7}    & \multicolumn{1}{l|}{7-8}    & \multicolumn{1}{l|}{8-9}    & \multicolumn{1}{l|}{9-10}   & \multicolumn{1}{l|}{10-11}                      \\ \hline
+1  Fetch Operands                         & \multicolumn{2}{c|}{\cellcolor[HTML]{6434FC}{\color[HTML]{333333} I}} & \multicolumn{2}{c|}{\cellcolor[HTML]{00D2CB}II}                        & \multicolumn{2}{c|}{\cellcolor[HTML]{32CB00}III}        & \multicolumn{2}{c|}{\cellcolor[HTML]{FFC702}IV}           & \multicolumn{2}{c|}{\cellcolor[HTML]{CB0000}V}            & \multicolumn{1}{r|}{\cellcolor[HTML]{9B9B9B}VI} \\ \hline
+2 Compare Exponents                       & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{6434FC}I                  & \cellcolor[HTML]{6665CD}- & \cellcolor[HTML]{00D2CB}II & \cellcolor[HTML]{68CBD0}-  & \cellcolor[HTML]{32CB00}III & \cellcolor[HTML]{34FF34}-   & \cellcolor[HTML]{FFC702}IV  & \cellcolor[HTML]{F8FF00}-   & \cellcolor[HTML]{CB0000}V                       \\ \cline{1-1} \cline{4-12} 
+3 Normalize                               & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{FFFFFF}                   & \cellcolor[HTML]{6434FC}I & \cellcolor[HTML]{6665CD}-  & \cellcolor[HTML]{00D2CB}II & \cellcolor[HTML]{68CBD0}-   & \cellcolor[HTML]{32CB00}III & \cellcolor[HTML]{34FF34}-   & \cellcolor[HTML]{FFC702}IV  & \cellcolor[HTML]{F8FF00}-                       \\ \cline{1-1} \cline{5-12} 
+4 Add                                     & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{FFFFFF}                   &                           & \cellcolor[HTML]{6434FC}I  & \cellcolor[HTML]{6665CD}-  & \cellcolor[HTML]{00D2CB}II  & \cellcolor[HTML]{68CBD0}-   & \cellcolor[HTML]{32CB00}III & \cellcolor[HTML]{34FF34}-   & \cellcolor[HTML]{FFC702}IV                      \\ \cline{1-1} \cline{6-12} 
+5 Normalize Result                        & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{FFFFFF}                   &                           &                            & \cellcolor[HTML]{6434FC}I  & \cellcolor[HTML]{6665CD}-   & \cellcolor[HTML]{00D2CB}II  & \cellcolor[HTML]{68CBD0}-   & \cellcolor[HTML]{32CB00}III & \cellcolor[HTML]{34FF34}-                       \\ \cline{1-1} \cline{7-12} 
+6 Round Result                            & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{FFFFFF}                   &                           &                            &                            & \cellcolor[HTML]{6434FC}I   & \cellcolor[HTML]{6665CD}-   & \cellcolor[HTML]{00D2CB}II  & \cellcolor[HTML]{68CBD0}-   & \cellcolor[HTML]{32CB00}III                     \\ \cline{1-1} \cline{8-12} 
+7 Store Result                            & \multicolumn{2}{c|}{\multirow{-6}{*}{}}                               & \multirow{-5}{*}{\cellcolor[HTML]{FFFFFF}} & \multirow{-4}{*}{}        & \multirow{-3}{*}{}         & \multirow{-2}{*}{}         &                             & \multicolumn{2}{c|}{\cellcolor[HTML]{6434FC}I}            & \multicolumn{2}{c|}{\cellcolor[HTML]{00D2CB}II}                               \\ \hline
+\end{tabular}
+\end{table}
 	\end{itemize}
 \item %Problem 2:
 	\begin{itemize}
@@ -73,13 +91,13 @@
 				Lets now consider the memory access times as follows\\
 				\begin{enumerate}
 					\item Time needed to get the entire y in cache from DRAM: \\
-							$K$ amount of cache lines to be retreived = $K*100ns$ time. 
+							$K$ amount of cache lines to be retrieved = $K*100ns$ time. 
 					\item Time needed to get the entire z in cache once from DRAM: \\
-							$K$ amount of cache lines to be retreived = $K*100ns$ time. 
+							$K$ amount of cache lines to be retrieved = $K*100ns$ time. 
 					\item Time needed to get the entire x in cache repeatedly from DRAM: \\
-							$16K^2/4$ number of cache lines to be retreived = $4K^2*100ns$ \\
-					\item Time needed for retreiving data from the caches for the arithmetic operations: \\
-							$16K^2$ opearations taking place and for each of these 3 elements have to be accessed from the cache = $ 48K^2$ns\\
+							$16K^2/4$ number of cache lines to be retrieved = $4K^2*100ns$ \\
+					\item Time needed for retrieving data from the caches for the arithmetic operations: \\
+							$16K^2$ operations taking place and for each of these 3 elements have to be accessed from the cache = $ 48K^2$ns\\
 					\item Time needed for processing:\\
 							$2*16K^2$ operations require a time of = $32K^2 ns$. 
 				\end{enumerate}
@@ -109,7 +127,7 @@
 							$4K^2$ number of cache lines to be retrieved = $4K^2 * 100ns$ time.
 					\item Time spent in getting Matrix $B$ in the cache from DRAM: \\
 							$(4K)^3$ number of cache lines to be retrieved = $64K^3 * 100ns$ time.
-					\item Time needed for retreiving data from caches for arithmetic operations: \\
+					\item Time needed for retrieving data from caches for arithmetic operations: \\
 							$3*(4K)^3$ values need to be accessed from the cache = $192K^3$ ns time. \\
 					\item Time needed for the arithmetic operations to take place: \\
 							$2*(4K)^3$ number of arithmetic operations take place = $128K^3$ ns time.
@@ -130,15 +148,78 @@
 \end{itemize}
 \item %Problem 3:
 	\begin{itemize}
-			\item The value assigned to \textit{y} is 1. This is because when the instruction is executed on $T_0$, the value of y is set to 1 and cache 2, snoops the change.
-			\item In the case when directory based cache coherence, the value is again 1. As x is in the shared section, when it gets updated by $T_0$ the changes are reflected.
-			\item There is no problem based on cache protocols and coherence in this situation. The problem here is because of a race condition.
+			\item As the 2 threads are running concurrently, either of the 2 instructions can execute before the other.\\
+			\textit{Case 1} : $T_0$ executed before $T_1$ . \\
+				In this case, the value of x gets updated to 1 in the cache corresponding to the thread $T_0$. By snooping protocol, the cache of $T_1$ detects the change and hence when $T_1$ executes the command, the value of y is set to 1.\\
+					%The value assigned to \textit{y} is 1. This is because when the instruction is executed on $T_0$, the value of y is set to 1 and cache 2, snoops the change.
+			\textit{Case2} : $T_1$ executed before $T_0$ . \\
+				In this case the value of y is set as 0 as t  hat is the value which is present in the cache.
+			\item As the 2 threads are running concurrently, either of the 2 instructions can execute before the other.\\
+			\textit{Case 1} : $T_0$ executed before $T_1$ . \\
+				In this case, the value of x gets updated to 1 in the cache corresponding to the thread $T_0$. By directory based cache protocol, When $T_1$ executes the command, the value of y is set to 1.\\
+					%The value assigned to \textit{y} is 1. This is because when the instruction is executed on $T_0$, the value of y is set to 1 and cache 2, snoops the change.
+			\textit{Case2} : $T_1$ executed before $T_0$ . \\
+				In this case the value of y is set as 0 as t  hat is the value which is present in the cache.
+			%\item In the case when directory based cache coherence, the value is again 1. As x is in the shared section, when it gets updated by $T_0$ the changes are reflected.
+			\item There is no problem based on cache protocols and coherence in this situation. The problem here is because of lack of synchronisation amongst the threads.
 	\end{itemize}
 \item %Problem 4:
 	\begin{itemize}
-		\item
-		\item
-		\item
+			\item 
+					Speedup:
+					\begin{align*}
+						s &= \frac{T_{serial}}{T_{Parallel}} \\
+							&= \frac{T_{Serial}}{T_{Overhead}+ \frac{T_{Serial}}{p}}
+					\end{align*}
+					Efficiency:
+					\begin{align*}	
+							e &= \frac{s}{p} \\
+							&= \frac{T_{Serial}}{p*T_{Overhead}+ T_{Serial}}\\
+							&= \frac{1}{1+ p*\frac{T_{Overhead}}{T_{Serial}}}
+					\end{align*}
+					On increasing the problem size, the rate of increase of $T_{Overhead}$ is lower than that of $T_{Serial}$ hence the value of the denominator term in efficiency keeps decreasing as the problem size increases. \\
+					$\implies$ That the efficiency of a program increases with increase in program size.
+		\item To comment on the scalability of the program, we need to check if on increasing $n$, the value of efficiency can be kept the same by increasing $p$. \\
+				\begin{align*}
+					e &= \frac{s}{p} \\
+					&= \frac{T_{serial}}{p*T_{Parallal}}\\
+					&= \frac{n}{n+p*{\log p}}\\
+					&= \frac{1}{1+\frac{p*{\log p}}{n}}
+				\end{align*}
+				Now if we increase $n$ we can increase $p$ as well so that $\frac{p*{\log p}}{n}$ remains the same and hence the value of efficiency remains the same.
+				\\ The property which needs to exist hence is: \\
+				\begin{align*}
+						\frac{p*{\log p}}{n} &= c \\
+						\implies p*{\log p} &= c*n
+				\end{align*}
+		\item For cost optimal version of prefix sums, we will compute sum of $n/p$ numbers on $p$ different cores in parallel. 
+				Then we will add the results in a binary tree fashion such that the tree is of height of $\log p$.
+				\\ 
+				\begin{enumerate}
+					\item Time needed for computing sum of $n/p$ numbers in parallel : $n/p-1$.
+					\item Time needed for joining sum of 2 precomputed sums is : $20+1$
+					\item Total time needed for joining results of the $n/p$ computed sums by the tree: $21*\log p$
+				\end{enumerate}
+				$\implies T_{Parallel} = n/p + 21*\log p -1$
+				\\ If this was executed sequentially, then the time needed is $n-1$ \\
+				%$\implies T_{Sequential} = n-1$ \\
+				\begin{align*}
+					T_{Sequential} &= n-1 \\
+					T_{Parallel} &= n/p -1 + 21*\log p \\
+						S &= \frac{T_{Serial}}{T_{Parallel}} \\
+						&= \frac{n-1}{n/p +21*\log p -1} \\
+					Effeciency &= \frac{S}{p} \\
+					&= \frac{n-1}{n-1 +21*p*\log p} \\
+					&= \frac{1}{1+\frac{21*p*\log p}{n-1}}\\
+					Cost &= p*T_{Parallel}\\
+							&=n-1+p*\log p\\
+					Iso efficiency function &=> 1+ \frac{21*p*\log p}{n-1} = c\\
+						&=> \frac{21*p*\log p}{n-1}= c\\
+						&=> 21*p*\log p= c*(n-1)\\
+						&=> Iso Efficiency function = \frac{21*p*\log p}{n-1}
+				\end{align*}
+
+
 	\end{itemize}
 
 %\item % Problem 1: 
