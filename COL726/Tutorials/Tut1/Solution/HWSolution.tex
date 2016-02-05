@@ -1,0 +1,547 @@
+\documentclass[11pt]{article}
+% decent example of doing mathematics and proofs in LaTeX.
+% An Incredible degree of information can be found at
+% http://en.wikibooks.org/wiki/LaTeX/Mathematics
+
+% Use wide margins, but not quite so wide as fullpage.sty
+\marginparwidth 0.5in 
+\oddsidemargin 0.25in 
+\evensidemargin 0.25in 
+\marginparsep 0.25in
+\topmargin 0.25in 
+\textwidth 6in \textheight 8 in
+% That's about enough definitions
+
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+ 
+\usepackage{listings}
+\usepackage{color}
+ \usepackage{multirow}
+ \usepackage[table,xcdraw]{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+%\usepackage{upgreek}
+
+\begin{document}
+\author{Kartikeya Gupta, 2013CS10231}
+\title{Tutorial Sheet 1: COL726}
+\maketitle
+
+\begin{enumerate}
+		\item \textbf {Discretization} \\
+		\begin{enumerate}
+				\item % Part 1
+						TODO: Put in proof \\
+						Code for this problem is in the $Codes$ folder. \\
+						Result comparison: \\
+						\begin{table}[!htb]
+						\centering
+						\caption{Variation of h with result}
+						\label{my-label}
+						\begin{tabular}{|c|c|}
+						\hline
+						Value of h & Result        \\ \hline
+						0.1        & 1.99662925254 \\ \hline
+						0.01       & 1.99994799207 \\ \hline
+						0.001      & 1.99999975037 \\ \hline
+						\end{tabular}
+						\end{table}	%\begin{itemize}
+				\item % Part 2
+						\begin{enumerate}
+								\item Solution of Differential Equation
+									\begin{align*}
+										y(x) &= e^{x^{2}} + x \\
+											\implies LHS &= y'(x) = 2xe^{x^{2}} + 1 \\
+											\implies RHS &= 2xy(x)-2x^2 + 1 \\
+															&= 2xe^{x^{2}} +2x^2 -2x^2 +1 \\
+													  &= 2xe^{x^{2}}+1 \\
+											\implies LHS &= RHS
+									\end{align*}
+								\item Divided difference \\ 
+										TODO: Put in proof
+								\item Graph and analysis \\
+										TODO: Write code and plot graphs
+						\end{enumerate}
+				\item %Part 3
+						\begin{enumerate}
+								\item Deriving square root \\
+										\begin{align*}
+											 y(x) &= x^2-c \\
+												\implies y'(x) &= 2x\\
+												\implies  x_{k+1} &= x_{k} - \frac{f(x)}{f'(x)} \\
+												&= x_{k} - \frac{{x_k}^2 - c}{2x_k} \\
+												 c=2 \implies x_{k+1} &= \frac{x_k}{2} + \frac{1}{x_k} 
+										\end{align*}
+								\item Proof for digits of accuracy \\
+										TODO: Write proof
+								\item Table of convergence rate \\
+										Code can be found in the $Codes$ folder. \\
+												\begin{table}[!htb]
+												\centering
+												\caption{Variation of digits of accuracy with iterations}
+												\label{my-label}
+												\begin{tabular}{|c|c|c|}
+												\hline
+												\textbf{Number of Iterations} & \textbf{Value Guessed}        & \textbf{Digits of Accuracy} \\ \hline
+												0                             & 1                             & 0                           \\ \hline
+												1                             & 1.5                           & 1                           \\ \hline
+												2                             & 1.416666666666666666666666666 & 2                           \\ \hline
+												3                             & 1.414215686274509803921568628 & 5                           \\ \hline
+												4                             & 1.414213562374689910626295579 & 10                          \\ \hline
+												5                             & 1.414213562373095048801689624 & 23                          \\ \hline
+												6                             & 1.414213562373095048801688724 & 27+                         \\ \hline
+												\end{tabular}
+												\end{table}
+						\end{enumerate}
+				\item %Part 4
+						\begin{enumerate}
+								\item Truncation Error
+								\item Rounding Error
+								\item Truncation Error
+								\item Truncation Error
+						\end{enumerate}
+			\end{enumerate}
+	\item \textbf{Unstable and Ill-conditioned problems} \\
+			\begin{enumerate}
+				\item 
+					\begin{enumerate}
+						\item 
+								\begin{align*}
+									y'(x) &= (2/\pi)xy(y-\pi) \\
+									y(0) &= y_0 \\
+									\implies (\frac{1}{y-\pi} -\frac{1}{y})dy &= 2x dx \\
+										\implies \log{\frac{y-\pi}{y}} &= x^2 + c \\
+								\implies \frac{y-\pi}{y} &= \frac{y_0 - \pi}{y_0} * e^{x^2} \\
+									\implies y &= \frac{\pi *y_0}{y_0 + (\pi - y_0)*e^{x^2}} \\
+								\end{align*}
+						\item 
+								TODO: Clear confusion
+					\end{enumerate}
+				\item 
+						For the given equations: \\
+						\begin{align*}
+							x &= 2y + 0.5\\
+							cx &= ay -2 
+						\end{align*}
+						The solution is: $x=\frac{8-a}{4c-2a} ; y = \frac{4-c}{4c - 2a}$ .\\
+								\begin{table}[!htb]
+								\centering
+								\caption{Variation of solution}
+								\label{my-label}
+								\begin{tabular}{|l|l|l|}
+								\hline
+								\multicolumn{1}{|c|}{\textbf{}} & \multicolumn{1}{c|}{\textbf{x}} & \multicolumn{1}{c|}{\textbf{y}} \\ \hline
+								c=2.998 , a=6.001               & -199.9                          & -100.2                          \\ \hline
+								c=2.998, a=6                    & -250                            & -125.25                         \\ \hline
+								\end{tabular}
+								\end{table}
+						This problem is not stable.
+				\item 
+					The roots of the equation can be seen as follows:\\
+						\begin{table}[!htb]
+						\centering
+						\caption{Variation of roots}
+						\label{my-label}
+						\begin{tabular}{|c|c|c|c|}
+						\hline
+						\textbf{Value of c vs Roots} & \textbf{$x_1$} & \textbf{$x_2$} & \textbf{$x_3$} \\ \hline
+						203                          & 99.9796        & 1.1527         & 0.8677         \\ \hline
+						202                          & 99.9898        & 1.1057         & 0.9045         \\ \hline
+						201                          & 100            & 1              & 1              \\ \hline
+						200                          & 100.01         & 0.99+0.1i      & 0.99-0.1i      \\ \hline
+						199                          & 100.02         & 0.99+0.14i     & 0.99-0.14i     \\ \hline
+						\end{tabular}
+						\end{table}
+						When we vary the value of c it can be seen that the roots first converge to 1 and then turn complex.
+			\end{enumerate}
+	\item \textbf{Unstable methods} \\
+		\begin{enumerate}
+			\item % Part 1
+				The number of digits of accuracy in x will then be $2$ as the value of $\sqrt{b^2 - 4ac}$ correctly to 8 digits is .
+				The source for this error is that the value of $b$ and $\sqrt{b^2 -4ac}$ are very close to each other hence we lose precision while subtracting.
+			\item %Part 2
+				Roots of a quadratic equation are given by 
+					\begin{align*}
+							x &= \frac{-b \pm \sqrt{b^2 -4ac}}{2a} \\
+							  &= \frac{-b \pm \sqrt{b^2 -4ac}}{2a} * \frac{-b \mp \sqrt{b^2 -4ac}}{-b \mp \sqrt{b^2 -4ac}} \\
+							&= \frac{2c}{-b \mp \sqrt{b^2 -4ac}}
+					\end{align*}
+				The program for this can be found in the $Codes$ folder.
+				The results of this are as follows:
+				\begin{table}[!htb]
+				\centering
+				\caption{Comparison of both methods}
+				\label{my-label}
+				\begin{tabular}{|c|c|c|}
+				\hline
+				\textbf{}                                     & $10^1<a,c<10^2 ;  10^3<b<10^6$ &   $10^1<a,c<10^2 ;  10^6<b<10^8$         \\ \hline
+				\textbf{Mean of difference in roots}          & 0.00049                        & 3573.818  \\ \hline
+				\textbf{Maximum difference in roots} & 0.0033                         & 33072.863 \\ \hline
+				\end{tabular}
+				\end{table}
+			\item %Part 3
+					The graph and code can be found in the $codes$ folder. \\
+					There is a large deviation between the real and value computed in this case because the value of error is amplifying with every iteration. The error is increasing by a factor of k while computing the $I_k$ .
+			\item %Part 4
+				\begin{enumerate}
+					\item When the $x_i$ are close to each other, the valye of $x_i$ and $\bar{x}$ is close to each other. On squaring these $2$ individually, because of limited digits of accuracy, the squared values will be close to each other.
+						 Hence the value of the result will be 0 or something very small.
+					\item Refer to $Codes$ folder. 
+				\end{enumerate}
+			\item %Part 5
+				TODO: Add reasons
+				\begin{enumerate}
+					\item No, $sum1$ is not equal to the true value.
+					\item No $sum2$ and $sum3$ are not equal to the true values.
+					\item No. $sum4$ and $sum5$ are not equal to their true values.
+				\end{enumerate}
+		\end{enumerate}
+		%\item In an un-pipelined processor, 1000 operations are processed and for each line, a total time of $2ns + 1ns + 1ns + 1ns + 1ns + 1ns + 2ns$ is required. \\
+				%$\implies$ Total time needed = $1000 * 9ns$ \\
+				%$\implies$ t = $9000ns$
+		%\item In the given timings, the first and last stages take $2ns$ the amount of time while the other states take $1ns$ time. Because of this the time spent per instruction is $2ns$.\\
+			%The number of stages in the pipeline are $7$. \\
+			%As there are 2 pipelined processors, the number of lines executed by each will be half of earlier $ =500$. \\
+			%$\implies$ Time taken for processing 500 lines by a processor = $500*2ns$ = $ 1000ns$. \\
+			%But we have not taken into account the time which the last instruction will spend before leaving the pipeline. This is going to be $1ns+1ns+1ns+1ns+1ns+2ns$ = $7ns$. \\
+			%\vspace{0.1in}
+			%$\implies$ Total time taken = $1000ns+7ns = 1007ns$.
+			%\\
+			%\textbf{Timeline Diagram} \\
+			%The value in a cell represents the operation number which is being executed. A value of $-$ represents that the particular block will idle.
+%\begin{table}[!htb]
+%\centering
+%\caption{Timeline Diagram}
+%\label{my-label}
+%\begin{tabular}{|c|c|l|c|c|c|c|c|c|c|c|c|}
+%\hline
+%\multicolumn{1}{|l|}{Stages\Clock Cycles} & \multicolumn{1}{l|}{0-1}                     & 1-2                    & \multicolumn{1}{l|}{2-3}                   & \multicolumn{1}{l|}{3-4}  & \multicolumn{1}{l|}{4-5}   & \multicolumn{1}{l|}{5-6}   & \multicolumn{1}{l|}{6-7}    & \multicolumn{1}{l|}{7-8}    & \multicolumn{1}{l|}{8-9}    & \multicolumn{1}{l|}{9-10}   & \multicolumn{1}{l|}{10-11}                      \\ \hline
+%1  Fetch Operands                         & \multicolumn{2}{c|}{\cellcolor[HTML]{6434FC}{\color[HTML]{333333} I}} & \multicolumn{2}{c|}{\cellcolor[HTML]{00D2CB}II}                        & \multicolumn{2}{c|}{\cellcolor[HTML]{32CB00}III}        & \multicolumn{2}{c|}{\cellcolor[HTML]{FFC702}IV}           & \multicolumn{2}{c|}{\cellcolor[HTML]{CB0000}V}            & \multicolumn{1}{r|}{\cellcolor[HTML]{9B9B9B}VI} \\ \hline
+%2 Compare Exponents                       & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{6434FC}I                  & \cellcolor[HTML]{6665CD}- & \cellcolor[HTML]{00D2CB}II & \cellcolor[HTML]{68CBD0}-  & \cellcolor[HTML]{32CB00}III & \cellcolor[HTML]{34FF34}-   & \cellcolor[HTML]{FFC702}IV  & \cellcolor[HTML]{F8FF00}-   & \cellcolor[HTML]{CB0000}V                       \\ \cline{1-1} \cline{4-12} 
+%3 Normalize                               & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{FFFFFF}                   & \cellcolor[HTML]{6434FC}I & \cellcolor[HTML]{6665CD}-  & \cellcolor[HTML]{00D2CB}II & \cellcolor[HTML]{68CBD0}-   & \cellcolor[HTML]{32CB00}III & \cellcolor[HTML]{34FF34}-   & \cellcolor[HTML]{FFC702}IV  & \cellcolor[HTML]{F8FF00}-                       \\ \cline{1-1} \cline{5-12} 
+%4 Add                                     & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{FFFFFF}                   &                           & \cellcolor[HTML]{6434FC}I  & \cellcolor[HTML]{6665CD}-  & \cellcolor[HTML]{00D2CB}II  & \cellcolor[HTML]{68CBD0}-   & \cellcolor[HTML]{32CB00}III & \cellcolor[HTML]{34FF34}-   & \cellcolor[HTML]{FFC702}IV                      \\ \cline{1-1} \cline{6-12} 
+%5 Normalize Result                        & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{FFFFFF}                   &                           &                            & \cellcolor[HTML]{6434FC}I  & \cellcolor[HTML]{6665CD}-   & \cellcolor[HTML]{00D2CB}II  & \cellcolor[HTML]{68CBD0}-   & \cellcolor[HTML]{32CB00}III & \cellcolor[HTML]{34FF34}-                       \\ \cline{1-1} \cline{7-12} 
+%6 Round Result                            & \multicolumn{2}{c|}{}                                                 & \cellcolor[HTML]{FFFFFF}                   &                           &                            &                            & \cellcolor[HTML]{6434FC}I   & \cellcolor[HTML]{6665CD}-   & \cellcolor[HTML]{00D2CB}II  & \cellcolor[HTML]{68CBD0}-   & \cellcolor[HTML]{32CB00}III                     \\ \cline{1-1} \cline{8-12} 
+%7 Store Result                            & \multicolumn{2}{c|}{\multirow{-6}{*}{}}                               & \multirow{-5}{*}{\cellcolor[HTML]{FFFFFF}} & \multirow{-4}{*}{}        & \multirow{-3}{*}{}         & \multirow{-2}{*}{}         &                             & \multicolumn{2}{c|}{\cellcolor[HTML]{6434FC}I}            & \multicolumn{2}{c|}{\cellcolor[HTML]{00D2CB}II}                               \\ \hline
+%\end{tabular}
+%\end{table}
+	%\end{itemize}
+%\item %Problem 2:
+	%\begin{itemize}
+			%\item For the peak operation, the entire y will be present in the cache and blocks of x will keep entering and getting evicted by the cache. The present z which is being needed will also be a member of the cache.\\
+				%Lets now consider the memory access times as follows\\
+				%\begin{enumerate}
+					%\item Time needed to get the entire y in cache from DRAM: \\
+							%$K$ amount of cache lines to be retrieved = $K*100ns$ time. 
+					%\item Time needed to get the entire z in cache once from DRAM: \\
+							%$K$ amount of cache lines to be retrieved = $K*100ns$ time. 
+					%\item Time needed to get the entire x in cache repeatedly from DRAM: \\
+							%$16K^2/4$ number of cache lines to be retrieved = $4K^2*100ns$ \\
+					%\item Time needed for retrieving data from the caches for the arithmetic operations: \\
+							%$16K^2$ operations taking place and for each of these 3 elements have to be accessed from the cache = $ 48K^2$ns\\
+					%\item Time needed for processing:\\
+							%$2*16K^2$ operations require a time of = $32K^2 ns$. 
+				%\end{enumerate}
+				%$\implies$ Total time for this = $480K^2 + 200K ns$ \\
+				%Total number of instructions taking place = $32*K^2$.\\
+				%$\implies$ Number of operations per second = \[ 
+						%\frac{32 K^2 *10^9}{480K^2 + 200K} \\
+				%\]
+				%Approximating K to 1000, $\implies$  \[
+						%\frac{32 * 10^6 *10^3}{480* 10^6 + 200*10^3} Mflops \\
+				%\]
+				%$\implies$ \[
+						%66.68 Mflops
+					%\]
+
+		%\item Consider the following code for multiplying the matrices \\
+				%\lstinputlisting[language=C]{MatMul.c}
+				%For multiplying 2 dense matrices in given, we have to perform $(4K)^3$ mathematical operations \\
+				%When the matrices are stored in row major form, for matrix $A$, we need to keep a given row $i$ of the matrix $A$ in the cache along with the memory in $C$ where the result is to be stored.
+				%The elements of matrix $B$ are to be fetched column wise but if we wish to access a particular element, we will get 3 other elements which are of no use at that time.
+				%Hence for a given $i$ and $j$, the entire column from matrix $C$ needs to be accessed from the DRAM. \\
+				%Let us calculate the memory access times as follows: \\
+				%\begin{enumerate}
+					%\item Time spent in getting Matrix $A$ in the cache from DRAM: \\
+							%$4K^2$ number of cache lines to be retrieved = $4K^2 * 100ns$ time.
+					%\item Time spent in getting Matrix $C$ in the cache from DRAM: \\
+							%$4K^2$ number of cache lines to be retrieved = $4K^2 * 100ns$ time.
+					%\item Time spent in getting Matrix $B$ in the cache from DRAM: \\
+							%$(4K)^3$ number of cache lines to be retrieved = $64K^3 * 100ns$ time.
+					%\item Time needed for retrieving data from caches for arithmetic operations: \\
+							%$3*(4K)^3$ values need to be accessed from the cache = $192K^3$ ns time. \\
+					%\item Time needed for the arithmetic operations to take place: \\
+							%$2*(4K)^3$ number of arithmetic operations take place = $128K^3$ ns time.
+				%\end{enumerate}
+				%$\implies$ Total time for this = $6720K^3 + 800K^2$ ns. \\
+				%Total number of instructions taking place = $128K^3$ \\
+				%$\implies$ Number of operations per second= \\
+				%\[
+					%\frac{128*K^3 * 10^9}{6720*K^3 + 800*K^2} Flops
+				%\]
+				%Approximating K to 1000 $\implies$
+				%\[
+						%\frac{128*10^9*10^3}{6720*10^9 + 800*10^6} MFlops
+				%\]
+				%$\implies$  \[
+					%19.045 Mflops
+				%\]
+%\end{itemize}
+%\item %Problem 3:
+	%\begin{itemize}
+			%\item As the 2 threads are running concurrently, either of the 2 instructions can execute before the other.\\
+			%\textit{Case 1} : $T_0$ executed before $T_1$ . \\
+				%In this case, the value of x gets updated to 1 in the cache corresponding to the thread $T_0$. By snooping protocol, the cache of $T_1$ detects the change and hence when $T_1$ executes the command, the value of y is set to 1.\\
+					%%The value assigned to \textit{y} is 1. This is because when the instruction is executed on $T_0$, the value of y is set to 1 and cache 2, snoops the change.
+			%\textit{Case2} : $T_1$ executed before $T_0$ . \\
+				%In this case the value of y is set as 0 as t  hat is the value which is present in the cache.
+			%\item As the 2 threads are running concurrently, either of the 2 instructions can execute before the other.\\
+			%\textit{Case 1} : $T_0$ executed before $T_1$ . \\
+				%In this case, the value of x gets updated to 1 in the cache corresponding to the thread $T_0$. By directory based cache protocol, When $T_1$ executes the command, the value of y is set to 1.\\
+					%%The value assigned to \textit{y} is 1. This is because when the instruction is executed on $T_0$, the value of y is set to 1 and cache 2, snoops the change.
+			%\textit{Case2} : $T_1$ executed before $T_0$ . \\
+				%In this case the value of y is set as 0 as t  hat is the value which is present in the cache.
+			%%\item In the case when directory based cache coherence, the value is again 1. As x is in the shared section, when it gets updated by $T_0$ the changes are reflected.
+			%\item There is no problem based on cache protocols and coherence in this situation. The problem here is because of lack of synchronisation amongst the threads.
+	%\end{itemize}
+%\item %Problem 4:
+	%\begin{itemize}
+			%\item 
+					%Speedup:
+					%\begin{align*}
+						%s &= \frac{T_{serial}}{T_{Parallel}} \\
+							%&= \frac{T_{Serial}}{T_{Overhead}+ \frac{T_{Serial}}{p}}
+					%\end{align*}
+					%Efficiency:
+					%\begin{align*}	
+							%e &= \frac{s}{p} \\
+							%&= \frac{T_{Serial}}{p*T_{Overhead}+ T_{Serial}}\\
+							%&= \frac{1}{1+ p*\frac{T_{Overhead}}{T_{Serial}}}
+					%\end{align*}
+					%On increasing the problem size, the rate of increase of $T_{Overhead}$ is lower than that of $T_{Serial}$ hence the value of the denominator term in efficiency keeps decreasing as the problem size increases. \\
+					%$\implies$ That the efficiency of a program increases with increase in program size.
+		%\item To comment on the scalability of the program, we need to check if on increasing $n$, the value of efficiency can be kept the same by increasing $p$. \\
+				%\begin{align*}
+					%e &= \frac{s}{p} \\
+					%&= \frac{T_{serial}}{p*T_{Parallal}}\\
+					%&= \frac{n}{n+p*{\log p}}\\
+					%&= \frac{1}{1+\frac{p*{\log p}}{n}}
+				%\end{align*}
+				%Now if we increase $n$ we can increase $p$ as well so that $\frac{p*{\log p}}{n}$ remains the same and hence the value of efficiency remains the same.
+				%\\ The property which needs to exist hence is: \\
+				%\begin{align*}
+						%\frac{p*{\log p}}{n} &= c \\
+						%\implies p*{\log p} &= c*n
+				%\end{align*}
+		%\item For cost optimal version of prefix sums, we will compute sum of $n/p$ numbers on $p$ different cores in parallel. 
+				%Then we will add the results in a binary tree fashion such that the tree is of height of $\log p$.
+				%\\ 
+				%\begin{enumerate}
+					%\item Time needed for computing sum of $n/p$ numbers in parallel : $n/p-1$.
+					%\item Time needed for joining sum of 2 precomputed sums is : $20+1$
+					%\item Total time needed for joining results of the $n/p$ computed sums by the tree: $21*\log p$
+				%\end{enumerate}
+				%$\implies T_{Parallel} = n/p + 21*\log p -1$
+				%\\ If this was executed sequentially, then the time needed is $n-1$ \\
+				%%$\implies T_{Sequential} = n-1$ \\
+				%\begin{align*}
+					%T_{Sequential} &= n-1 \\
+					%T_{Parallel} &= n/p -1 + 21*\log p \\
+						%S &= \frac{T_{Serial}}{T_{Parallel}} \\
+						%&= \frac{n-1}{n/p +21*\log p -1} \\
+					%Efficiency &= \frac{S}{p} \\
+					%&= \frac{n-1}{n-1 +21*p*\log p} \\
+					%&= \frac{1}{1+\frac{21*p*\log p}{n-1}}\\
+					%Cost &= p*T_{Parallel}\\
+							%&=n-1+p*\log p\\
+					%Iso efficiency function &=> 1+ \frac{21*p*\log p}{n-1} = c\\
+						%&=> \frac{21*p*\log p}{n-1}= c\\
+						%&=> 21*p*\log p= c*(n-1)\\
+						%&=> Iso Efficiency function = \frac{21*p*\log p}{n-1}
+				%\end{align*}
+
+
+	%\end{itemize}
+
+%\item % Problem 1: 
+
+%Prove that:
+%% starts math environment, multiline
+%\[
+%1^2 + 2^2 + \cdots + n^2 = \frac{n(n+1)(2n+1)}{6}
+%\]
+
+%Using Proof by Induction.
+
+%First, prove that for some n, this equation holds true.
+
+%% starts math environment with alignment on a particular pivot.  The pivot is
+%% denoted by '&' on each line
+%\begin{align*}
+%n = 2
+%1^2 + 2^2 & = \frac{2(2+1)(4+1)}{6} \\
+%2 + 4 & = \frac{2(3)(5)}{6} \\
+%6 &= \frac{30}{6} \\
+%6 &= 6
+%\end{align*}
+
+%Now, prove that this works for any n+1.
+
+%\begin{align*}
+%1^2 + 2^2 + \cdots + n^2 & = \frac{n(n+1)(2n+1)}{6} \\
+%1^2 + 2^2 + \cdots + n^2 + (n+1)^ 2 & = \frac{(n+1)(n+2)(2n+3)}{6} \\
+%\intertext{Notice that the n+1 equation contains the n equation.}
+%\boxed{1^2 + 2^2 + \cdots + n^2 } + (n+1)^ 2 & = \frac{(n+1)(n+2)(2n+3)}{6} \\
+%\frac{n(n+1)(2n+1)}{6} + (n+1)^2 & = \frac{(n+1)(n+2)(2n+3)}{6} \\
+%n(n+1)(2n+1) + 6(n+1)^2 & = (n+1)(n+2)(2n+3) \\
+%n(2n+1) + 6(n+1) & = (n+2)(2n+3) \\
+%2n^2 + n + 6n + 6 & = 2n^2 + 4n + 3n + 6 \\
+%2n^2 + 7n + 6 &= 2n^2 + 7n + 6 \\
+%\intertext{therefore}
+%1^2 + 2^2 + \cdots + n^2 & = \frac{n(n+1)(2n+1)}{6}
+%\end{align*}
+
+%\item % Problem 2
+%Prove that
+
+%\[
+%6 \mid n^3 - n
+%\]
+
+%Using Proof by Induction.
+
+%First prove that this equation is valid for an arbitrary n.
+
+%\begin{align*}
+%n & = 2 \\
+%6 & \mid 2^3 - 2 \\
+%6 & \mid 6
+%\end{align*}
+
+%Now, prove for any n+1
+
+%\begin{align*}
+%6 & \mid (n+1)^3 - (n+1) \\
+%6 & \mid n^3 + 3n^2 + 3n + 1 - n - 1 \\
+%6 & \mid n^3 + 3n^2 + 3n - n \\
+%\intertext{I can pull the original equation out of this one}
+%6 & \mid \boxed{n^3 - n} + 3n^2 + 3n \\
+%\intertext{Now I need to prove that $3n^2 + 3n$ is divisible by 6}
+%6 & \mid 3n^2 + 3n \\
+%6 & \mid 3(n^2 + n) \\
+%2 & \mid n^2 + n \\ 
+%\end{align*}
+%% this line contains a snippet of math.  Rather than owning its own line, this 
+%% math equation is integrated in into the surrounding text.
+%Now I need to prove that $n^2 + n$ is divisible by 2, or even 
+
+%Let n be even. By our proof in class today (seen in one form in problem 3),
+%$n^2$ is even when $n$ is even.  An even number added to an even number is even.
+
+%Let n be odd. By the same proof, $n^2$ is odd when $n$ is odd. An odd number
+%added to an odd number is an even number. Therefore, $n^2 + n$ is an even
+%number. 
+
+%Therefore, $6 \mid (n+1)^3 - (n+1)$.
+
+%\item % Problem 3
+%Prove that $\sqrt[3]{2}$ is an irrational number
+
+%Assume that $\sqrt[3]{2}$ is a rational number.  If so, then
+%\begin{align*}
+%\sqrt[3]{2} = \frac{a}{b} & != 0 \\
+%\intertext{\em{where a,b have no common factors}}
+%% this command embeds normal text in a math context.  Very useful.
+%a^3 & = b\sqrt[3]{2} \\
+%a^3 & = 2b^3 
+%\intertext{We now know that $a^3$ is even. It would be helpful is a was even.}
+%\intertext{Let $a^3$ be even, prove that a is even}
+%a^3 & = 2k \\
+%a & = \sqrt[3]{2k} \\
+%a & = \sqrt[3]{2} \sqrt[3]{k} \\
+%\intertext{Blech...lets try again with the contrapositive.}
+%% and here I'm embedding normal text with a math snippet in it.
+%\intertext{Assume that a is odd, prove $a^3$ is odd.}
+%a & = 2k + 1 \\
+%a^3 & = 8k^3 + 12k^2 + 6k + 1 \\
+%a^3 & = 2(4k^3 + 6k^2 + 3k) + 1 \\
+%\intertext{$a^3$ is odd, therefore if $a^3$ is even, a is even.  Now back.}
+%a^3 & = 2b^3 \\
+%(2L)^3 & = 2b^3 \\
+%8L^3 & = 2b^3 \\
+%4L^3 & = b^3 \\
+%2(2L^3) & = b^3 \\
+%\intertext{By the same proof as above, $b$ must be even because $b^3$ is even.
+%Now, a and b share the common factor of two, therefore, $\sqrt[3]{2}$ is not
+%rational, and therefore irrational.}
+%\end{align*}
+%\item % Problem 4
+%Given G(V,E), we know that $\sum_{1}^{n} \mid d_i = 2e$. Prove
+%\[
+%e \leq \frac{n(n-1)}{2}
+%\]
+
+%\begin{align*}
+%\intertext{Base case $n=2$, a graph with two vertices has 1 edge.}
+%e & = 1 \\
+%e & \leq \frac{2(2-1)}{2} \\
+%1 & \leq 1 \\
+%\intertext{Now prove the $n+1$ option. When the $n+1$ vertice is added, it can
+%add up to $n$ edges, one for each of the existing vertices.}
+%e + n & \leq \frac{(n+1)n}{2} \\
+%e + n & \leq \frac{n^2 + n}{2} \\
+%e + n & \leq \frac{n^2 + n + n - n}{2} \\
+%e + n & \leq \frac{n^2 - n}{2} + \frac{2n}{2} \\
+%e + n & \leq \boxed{\frac{n(n-1)}{2}} + n \\
+%\intertext{Therefore, by induction:}
+%e & \leq \frac{n(n-1)}{2}
+%\end{align*}
+
+%\item % Problem 5
+
+%Show that every graph with two or more nodes contains two nodes that have equal
+%degrees.
+
+%Let us try to prove that every graph with two or more nodes have unique
+%degrees.  We know that the set of possible degrees for a graph with $n$ vertices
+%is:
+
+%\[
+%0,1,\ldots,n-1
+%\]
+
+%This gives us a total of $n$ unique degrees to assign to our $n$ vertices. We
+%must assign a degree of zero to one vertex. A vertex with degree zero is
+%connected to no other vertices.  Let us now assign the degree $n-1$ to a
+%vertice.  This vertice is connected to every other vertice in the graph.
+%This is a contradiction, because it is impossible to simulatenously have a
+%vertice that is connected to every other vertice, and a vertice that is
+%connected to none.  Therefore, there are at least two vertices with the same
+%degree in any graph with at least 2 vertices.
+\end{enumerate}
+\end{document}
