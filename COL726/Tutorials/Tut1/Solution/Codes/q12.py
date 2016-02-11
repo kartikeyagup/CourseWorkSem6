@@ -22,8 +22,8 @@ for i in xrange(1,20):
 print x
 print y
 print z
-plt.plot(x,y)
-plt.plot(x,z)
+plt.plot(x,y,color='red')
+plt.plot(x,z,color='blue')
 plt.grid(True)
 plt.show()
     

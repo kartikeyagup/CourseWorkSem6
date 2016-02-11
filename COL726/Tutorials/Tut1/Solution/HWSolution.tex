@@ -56,7 +56,8 @@
 		\item \textbf {Discretization} \\
 		\begin{enumerate}
 				\item % Part 1
-						TODO: Put in proof \\
+						The proof for this is trivial. It can be shown by dividing the region into small strips and computing the area of each strip by assuming it to be a trapezium.
+
 						Code for this problem is in the $Codes$ folder. \\
 						Result comparison: \\
 						\begin{table}[!htb]
@@ -83,9 +84,14 @@
 											\implies LHS &= RHS
 									\end{align*}
 								\item Divided difference \\ 
-										TODO: Put in proof
+										Substituting $y'_{k} = \frac{y_{k+1} - y_k}{h}$ we get \\
+										\begin{align*}
+											\frac{y_{k+1} - y_{k}}{h} &= 2x_ky(x_k) -2{x_k}^2 +1 \\
+											y_{k+1} - y_k &= h*(2x_ky(x_k) - 2{x_k}^2 +1) \\
+											\implies y_{k+1} &= y_k + h*(2x_ky(x_k) -2{x_k}^2 +1)
+										\end{align*}
 								\item Graph and analysis \\
-										TODO: Write code and plot graphs
+										Refer to $Codes$ folder.
 						\end{enumerate}
 				\item %Part 3
 						\begin{enumerate}
@@ -98,7 +104,16 @@
 												 c=2 \implies x_{k+1} &= \frac{x_k}{2} + \frac{1}{x_k} 
 										\end{align*}
 								\item Proof for digits of accuracy \\
-										TODO: Write proof
+										Let $\alpha$ be the root of the equation. \\
+										\begin{align*}
+												\implies f(\alpha)&=0 \\
+												f(\alpha)&= f(x_n) + f'(x_n)(\alpha - x_n) + 0.5*f"(z_n){(\alpha - x_n)}^2 \\
+												\implies 0 &=f(\alpha) = f(x_n) + f'(x_n)(\alpha - x_n) + 0.5*f"(z_n){(\alpha - x_n)}^2 \\
+												\implies \frac{f(x_n)}{f'(x_n)} + (\alpha - x_n) &= -\frac{f"(z_n)*(\alpha - x_n)^2}{2f'(x_n)} \\
+												\implies \alpha - x_{n+1} &= -\frac{f"(z_n)}{2*f'(x_n)}(\alpha - x_n)^2 \\
+												\implies \epsilon_{n+1} &= \frac{|f"(z_n)|}{2|f'(x_n)|}\epsilon_n^2
+										\end{align*}
+
 								\item Table of convergence rate \\
 										Code can be found in the $Codes$ folder. \\
 												\begin{table}[!htb]
@@ -139,8 +154,8 @@
 								\implies \frac{y-\pi}{y} &= \frac{y_0 - \pi}{y_0} * e^{x^2} \\
 									\implies y &= \frac{\pi *y_0}{y_0 + (\pi - y_0)*e^{x^2}} \\
 								\end{align*}
-						\item 
-								TODO: Clear confusion
+						%\item 
+								%TODO: Clear confusion
 					\end{enumerate}
 				\item 
 						For the given equations: \\
@@ -214,11 +229,15 @@
 					\item Refer to $Codes$ folder. 
 				\end{enumerate}
 			\item %Part 5
-				TODO: Add reasons
 				\begin{enumerate}
-					\item No, $sum1$ is not equal to the true value.
-					\item No $sum2$ and $sum3$ are not equal to the true values.
-					\item No. $sum4$ and $sum5$ are not equal to their true values.
+					\item No, $sum1$ is not equal to the true value. \\
+							The difference between the values is very small. This is because the number being added is not 0.1 but a number slightly different from 0.1 .
+					\item No $sum2$ and $sum3$ are not equal to the true values. \\
+							In this case the mathematical values of the $sum2$ and $sum3$ are different. On fixing this, the values of $sum2$ and $sum3$ becomes closer. The difference now is because of the method of adding them.
+							When big numbers are added initially, while adding small numbers in the end, there is more error.
+					\item No. $sum4$ and $sum5$ are not equal to their true values. \\
+							In this case as well, the mathematical values of $sum4$ and $sum5$ are different. On correcting this, the values become much closer. \\
+							The value of $sum4$ is absolute 0. The value of $sum5$ on the other hand is first the exact value and an error term and then it becomes the sum of 2 error terms.
 				\end{enumerate}
 		\end{enumerate}
 		%\item In an un-pipelined processor, 1000 operations are processed and for each line, a total time of $2ns + 1ns + 1ns + 1ns + 1ns + 1ns + 2ns$ is required. \\
