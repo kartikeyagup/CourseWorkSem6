@@ -1,3 +1,0 @@
-sh.c
-shell
-t.sh

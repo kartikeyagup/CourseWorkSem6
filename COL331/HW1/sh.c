@@ -61,8 +61,24 @@ runcmd(struct cmd *cmd)
     if(ecmd->argv[0] == 0)
         exit(0);
     /*fprintf(stderr,"function to be called %s\n",ecmd->argv[0]);*/
-    execvp(ecmd->argv[0], ecmd->argv);
-    // TODO: Check /bin folder
+    if (execv(ecmd->argv[0],ecmd->argv)==-1)
+    {
+        char x[80];
+        strcpy(x,"/bin/");
+        strcat(x,ecmd->argv[0]);
+        if (execv(x,ecmd->argv)==-1)
+        {
+            char y[80];
+            strcpy(y,"/usr/bin/");
+            strcat(y,ecmd->argv[0]);
+            if (execv(y,ecmd->argv)==-1)
+            {
+                fprintf(stderr,"Function not found\n");
+            }
+        }
+        /*execvp(ecmd->argv[0], ecmd->argv);*/
+    }
+     /*TODO: Check /bin folder*/
     // TODO: Enviornment variables
     break;
 
