@@ -39,10 +39,11 @@ thread_schedule(void)
         {
              t= all_thread;
         }
-        if (t->state == RUNNABLE && t!=current_thread)
+        if (t->state == RUNNABLE)
         {
-            if (t-> priority < best)
+            if (t->priority < best)
             {
+                /*printf(0,"Updated best to %d\n",t->priority);*/
                 bestthread = t;
                 best = t-> priority;
             }
